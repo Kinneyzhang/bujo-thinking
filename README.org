@@ -58,14 +58,15 @@
     
 **** Monthly Log设计
      * monthly log分四列
-	| Date  | Event    | Task    | Appoint  |
-	|-------+----------+---------+----------|
-	| 1 Wes | ○ thing1 | ● task1 |          |
-	| 2 Thu | ○ thing2 | ● task2 |          |
-	| 3 Fri | ○ thing3 |         | ● task11 |
-	| 4 Sta |          |         |          |
-	| 5 Sun |          |         | ● task22 |
-	| ..... | .....    | .....   | .....    |
+      
+       | Date  | Event    | Task    | Appoint  |
+       |-------+----------+---------+----------|
+       | 1 Wes | ○ thing1 | ● task1 |          |
+       | 2 Thu | ○ thing2 | ● task2 |          |
+       | 3 Fri | ○ thing3 |         | ● task11 |
+       | 4 Sta |          |         |          |
+       | 5 Sun |          |         | ● task22 |
+       | ..... | .....    | .....   | .....    |
      
      * 
 
