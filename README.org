@@ -35,55 +35,46 @@
      附：[[https://bulletjournal.com][bujo官网]], [[https://github.com/Kinneyzhang/bujo-thinking][bujo-mode设计思路]]
 
 ** bujo-mode设计思路(初稿)
-*** bujo-agenda
-    * F:bujo-agenda-future-view 未来记录(Future Log)
-    * M:bujo-agenda-month-view 月度记录(Monthly Log)
-    * D:bujo-agenda-ady-view 每日记录(Daily Log)
-    * a:bujo-agenda-task-abort
-    * d:bujo-agenda-task-done => × (done)
-    * m:bujo-agenda-task-migrated => > (migrated)
-      - task状态变为“>”
-      - 选择要迁移到的日期或新集子
-   * s:bujo-agenda-task-sheculed => < (schedule)
-      - task状态变为“<”
-      - 在未来记录中添加该task
-   * n:bujo-agenda-next-line
-      - p:bujo-agenda-previous-line
-      - f:bujo-agenda-later
-      - b:bujo-agenda-earlier
-      - .:bujo-agenda-goto-today
-      - j:bujo-agenda-goto-date
-      - r:bujo-agenda-refresh
-      - Tab bujo-agenda-goto
-      - q:bujo-agenda-quit
-      - x:bujo-agenda-exit
+*** bujo-mode设计文字描述
+**** Agenda设计
+     * 名词对应：future log = 未来记录；monthly log = 阅读记录；daily log = 每日记录；bullet：event，task，note统称bullet
+     * bujo-mode的主界面是bujo-agenda
+     * 在bujo-agenda中，按键'F'，展示future log；按键'M'，展示monthly log；按键'D'，展示daily log。默认展示当天的daily log
+     * agenda中方向移动：n(下),p(上)
+     * 日期或月份前后切换：'f'：向后切换；'b'：向前切换；'.'：回到当前月或日；'j'：跳转指定月或日。
+**** Daily Log设计
+     * daily log分为三类：tasks, events, notes
+     * 将光标移到对应类型的bullet的区域内，按键'+'，创建bullet记录
+     * 根据bujo迁移的思想，创建daily log的task类bullets时，要考察昨日记录和monthly log，顾按‘+’后在地步弹出创建bullet的buffer，上面分左右两栏，分别是monthly log和昨日记录。创建event和note则只有输入的buffer。
+     * 在daily log中，note只有舍弃的状态的变化；event有舍弃和'<'的状态必变化，'<'表示将事件记录到monthly log的event列中；task有5种状态变化done(×)，schedule(<), migrate(>), todo(●), abort(+task+)。状态改变时改变bullet开头的符号。
+     * 对于每种状态的变化，只需将光标移动到对应的bullet下，按对应的按键改变状态：todo('t'), schedule('s'), migrate('m'), done('d'), abort('a')
+**** Monthly Log设计
+     * monthly log分四列
+	| Date  | Event    | Task    | Appoint  |
+	|-------+----------+---------+----------|
+	| 1 Wes | ○ thing1 | ● task1 |          |
+	| 2 Thu | ○ thing2 | ● task2 |          |
+	| 3 Fri | ○ thing3 |         | ● task11 |
+	| 4 Sta |          |         |          |
+	| 5 Sun |          |         | ● task22 |
+	| ..... | .....    | .....   |          |
+**** Future Log设计
+     * ....
 
-*** bujo-agenda-file
-     * 自动生成特定格式的bujo.org
-     * 解析bujo.org, 实现bujo.org和bujo agenda的双向动态更新
-
-*** bujo-select
-     * keybinding: C-c b
-       | Select a capture template |
-       |---------------------------|
-       | [t]  Task                 |
-       | [e]  Event                |
-       | [n]  Note                 |
-
-    * key-point
-      - bujo-select选择t的时候将窗口分成左右两列，左边默认为bujo-agenda，显示昨天的记录，方便迁移
-      - 只有task状态可变。自动对task的状态进行排序，依次为：todo-migrated-scheduled-done-abort，r刷新
-      - bujo-agenda打开的默认展示为当天的Daily Log，分为三类：task, event, note
-       - n, p上下移动；task可改变状态：t(todo), m(migrate), s(scheduled), d(done), a(abort)
-       - f, b向前向后切换记录，“.”回到当天记录，j调用日历跳转到指定日期的日记录
-      - 按键M显示月度记录页，分四列
-       | Date  | Event    | Monthly Task | Calendar Task |
-       |-------+----------+--------------+---------------|
-       | 1 Wes | ○ thing1 | ● task1      |               |
-       | 2 Thu | ○ thing2 | ● task2      |               |
-       | 3 Fri | ○ thing3 |              | ● task11      |
-       | 4 Sta |          |              |               |
-       | 5 Sun |          |              | ● task22      |
-       | ..... | .....    | .....        |               |
-     - 同理n,p,f,b,.,j,t,m,s,d,a
-     - 按键F显示未来记录, 简单的task列表
+*** 函数设计
+    * F: bujo-agenda-future-view
+    * M: bujo-agenda-month-view
+    * D: bujo-agenda-ady-view
+    * a: bujo-agenda-task-abort
+    * d: bujo-agenda-task-done
+    * m: bujo-agenda-task-migrate
+    * s: bujo-agenda-task-shecule
+    * n: bujo-agenda-next-line
+    * p:bujo-agenda-previous-line
+    * f:bujo-agenda-later
+    * b:bujo-agenda-earlier
+    * .:bujo-agenda-goto-today
+    * j:bujo-agenda-goto-date
+    * r:bujo-agenda-refresh
+    * q:bujo-agenda-quit
+    * x:bujo-agenda-exit
