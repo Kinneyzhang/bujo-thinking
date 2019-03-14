@@ -47,7 +47,7 @@
      * daily log中，note只有abort状态变化；event有abort和schedule状态变化，schedule表示将事件记录到monthly log的event列中；task有5种状态变化done(×)，schedule(<), migrate(>), todo(●), abort(+task+)。括号中为状态改变后对应的符号。
      * 对于每种状态的变化，只需将光标移动到对应的bullet行，按对应的按键改变状态：todo('t'), schedule('s'), migrate('m'), done('d'), abort('a')
      * 下面着重介绍task状态变化在agenda中的交互
-       * 创建task：按键'+'，底部弹出输入框架，上面分为左右两栏，分别为daily log和monthly log。
+       * 创建task：按键'+'，底部弹出输入buffer，上面分为左右两栏，分别为daily log和monthly log。
        * done：bullet符号变为'×'
        * schedule：bullet符号变为'<'，在future log中添加该bullet
        * migrate：bullet符号变为'>'，在底部弹出buffer，buffer中按键选择不同选项，迁移到明日daily log或某个特定的集子。
